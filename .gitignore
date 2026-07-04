@@ -1,0 +1,16 @@
+# Block CubeIDE build outputs
+Debug/
+Release/
+*.elf
+*.bin
+*.map
+*.hex
+
+# Block local IDE settings and history
+.settings/
+.analytics
+.local_build_history
+
+# Keep your source code and project layout
+!.project
+!.cproject
