@@ -28,16 +28,16 @@ typedef struct {
 
 // ------ GPIO -------- //
 typedef struct {
-	volatile uint32_t MODER;
-	volatile uint32_t OTYPER;
-	volatile uint32_t OSPEEDR;
-	volatile uint32_t PUPDR;
-	volatile uint32_t IDR;
-	volatile uint32_t ODR;
-	volatile uint32_t BSRR;
-	volatile uint32_t LCKR;
-	volatile uint32_t AFRL;
-	volatile uint32_t AFRH;
+	volatile uint32_t MODER;    // Mode: Input, Output, Alt Function, or Analog
+	volatile uint32_t OTYPER;   // Output type: Push-Pull or Open-Drain
+	volatile uint32_t OSPEEDR;  // Output speed: Low, Medium, Fast, or High
+	volatile uint32_t PUPDR;    // Resistors: Pull-up, Pull-down, or None
+	volatile uint32_t IDR;      // Read input pin states (0 or 1)
+	volatile uint32_t ODR;      // Write output pin states (0 or 1)
+	volatile uint32_t BSRR;     // Fast, safe bit-set or bit-reset for ODR
+	volatile uint32_t LCKR;     // Locks pin configuration until reset
+	volatile uint32_t AFRL;     // Maps peripherals (SPI/UART) to pins 0-7
+	volatile uint32_t AFRH;     // Maps peripherals (SPI/UART) to pins 8-15
 } GPIO_TypeDef;
 
 #define GPIOA_BASE 		0x40020000U
