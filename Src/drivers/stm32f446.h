@@ -41,7 +41,11 @@ typedef struct {
 } GPIO_TypeDef;
 
 #define GPIOA_BASE 		0x40020000U
+#define GPIOB_BASE		0x40020400U
+#define GPIOC_BASE 		0x40020800U
 #define GPIOA			((GPIO_TypeDef *) GPIOA_BASE)
+#define GPIOB			((GPIO_TypeDef *) GPIOB_BASE)
+#define GPIOC			((GPIO_TypeDef *) GPIOC_BASE)
 
 // --- System Timer (SysTick) ---
 typedef struct {

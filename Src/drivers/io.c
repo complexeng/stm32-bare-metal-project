@@ -25,5 +25,8 @@ void gpio_toggle(GPIO_TypeDef *GPIOx, uint8_t pin){
 }
 
 uint8_t gpio_read(GPIO_TypeDef *GPIOx, uint8_t pin){
+	if( (GPIOx->IDR & (1U << pin)) != 0 ){
+		return 1;
+	}
 	return 0;
 }

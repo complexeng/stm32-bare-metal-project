@@ -20,6 +20,11 @@ typedef enum {
 	IO_OUT_HIGH = 1
 } IO_Out_State;
 
+typedef enum {
+	IO_IN_LOW = 0,
+	IO_IN_HIGH = 1
+} IO_In_State;
+
 // 1. Initialization and Configuration
 void gpio_init(GPIO_TypeDef *GPIOx, uint8_t pin, IO_Mode mode);
 void gpio_set_pupd(GPIO_TypeDef *GPIOx, uint8_t pin, Pupd_Mode pupd); // controls the internal Pull-Up and Pull-Down resistors
