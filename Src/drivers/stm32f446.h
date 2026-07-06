@@ -47,6 +47,12 @@ typedef struct {
 #define GPIOB			((GPIO_TypeDef *) GPIOB_BASE)
 #define GPIOC			((GPIO_TypeDef *) GPIOC_BASE)
 
+typedef enum {
+	PORTA = 0,
+	PORTB = 1,
+	PORTC = 2
+} Port;
+
 // --- System Timer (SysTick) ---
 typedef struct {
     volatile uint32_t STK_CTRL;   // Offset 0x00: Control and Status Register
