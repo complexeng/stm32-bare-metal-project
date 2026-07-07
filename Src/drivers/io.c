@@ -18,6 +18,11 @@ void gpio_set_pupd(GPIO_TypeDef *GPIOx, uint8_t pin, Pupd_Mode pupd){
 void gpio_write(GPIO_TypeDef *GPIOx, uint8_t pin, IO_Out_State state){
 	GPIOx->ODR &= ~(0x1U << pin);
 	GPIOx->ODR |= ((uint8_t)state << pin);
+	if(state == IO_OUT_HIGH){
+		GPIOx->BSRR = (1U << pin);
+	} else {
+		GPIOx->BSRR = (1U << (pin + 16));
+	}
 }
 
 void gpio_toggle(GPIO_TypeDef *GPIOx, uint8_t pin){
