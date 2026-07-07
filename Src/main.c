@@ -2,6 +2,7 @@
 #include "drivers/rcc.h"
 #include "drivers/io.h"
 #include "common/delay.h"
+#include "common/assert.h"
 
 int main(void) {
 	rcc_gpio_enable(PORTA);  // enable clock
