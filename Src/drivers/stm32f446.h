@@ -1,3 +1,4 @@
+/*
 #ifndef STM32F446_H
 #define STM32F446_H
 #include <stdint.h>
@@ -64,4 +65,38 @@ typedef struct {
 #define SYSTICK_BASE     0xE000E010U
 #define SYSTICK          ((SysTick_TypeDef *) SYSTICK_BASE)
 
+// --------- SYSCFG ---------- //
+typedef struct {
+    volatile uint32_t MEMRMP;     // 0x00: Memory remap register
+    volatile uint32_t PMC;        // 0x04: Peripheral mode configuration register
+    volatile uint32_t EXTICR[4];  // 0x08 - 0x14: External interrupt configuration registers
+    uint32_t RESERVED[2];         // 0x18 - 0x1C: Reserved
+    volatile uint32_t CMPCR;      // 0x20: Compensation cell control register
+} SYSCFG_TypeDef;
+
+#define SYSCFG_BASE     0x40013800U
+#define SYSCFG          ((SYSCFG_TypeDef *) SYSCFG_BASE)
+
+// ---------- EXTI ----------- //
+typedef struct {
+    volatile uint32_t IMR;        // 0x00: Interrupt mask register
+    volatile uint32_t EMR;        // 0x04: Event mask register
+    volatile uint32_t RTSR;       // 0x08: Rising trigger selection register
+    volatile uint32_t FTSR;       // 0x0C: Falling trigger selection register
+    volatile uint32_t SWIER;      // 0x10: Software interrupt event register
+    volatile uint32_t PR;         // 0x14: Pending register
+} EXTI_TypeDef;
+
+#define EXTI_BASE       0x40013C00U
+#define EXTI            ((EXTI_TypeDef *) EXTI_BASE)
+
+// ---------- NVIC ----------- //
+typedef struct {
+    volatile uint32_t ISER[8];    // 0x00: Interrupt Set-Enable Registers
+} NVIC_TypeDef;
+
+#define NVIC_BASE       0xE000E100U
+#define NVIC            ((NVIC_TypeDef *) NVIC_BASE)
+
 #endif // STM32F446_H
+*/

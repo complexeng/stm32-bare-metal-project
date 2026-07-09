@@ -1,4 +1,12 @@
 #include "io.h"
+#include "../common/assert.h"
+
+#define GET_PORT_INDEX(GPIOx)  (((uint32_t)(GPIOx) - GPIOA_BASE) / 0x0400UL)
+/*
+	GPIOA_BASE = 0x4002 0000
+	GPIOB_BASE = 0x4002 0400 (0x40020000 + 0x0400)
+	GPIOC_BASE = 0x4002 0800 (0x40020000 + 0x0800)
+ */
 
 void gpio_init(GPIO_TypeDef *GPIOx, uint8_t pin, IO_Mode mode){
 	// 1. Clear the two current mode bits for this specific pin.
@@ -32,4 +40,45 @@ uint8_t gpio_read(GPIO_TypeDef *GPIOx, uint8_t pin){
 		return 1;
 	}
 	return 0;
+}
+
+void interrupt_init(GPIO_TypeDef *GPIOx, uint8_t pin, Interrupt_Edge edge){
+
+	// Connect PxPIN to EXTI Line pin via SYSCFG
+	// EXTICR[X] controls EXTIx through EXTIx
+	// Clear the 4 bits for pin X (bits x to x) and write 0xX to select Port X.
+	uint8_t exticr_reg_slot = pin / 4;				// 1/4 = 0, 4/4 or 5/4 = 1, 8/4 = 2, 12/4 = 3
+	uint32_t port_index = GET_PORT_INDEX(GPIOx);	//
+	uint8_t exticr_bit_shift = (pin % 4) * 4;		// (0%4)*4=0, (1%4)*4=4, (2%4)*4=8, (3%4)*4=12
+
+	SYSCFG->EXTICR[exticr_reg_slot] &= ~(0xFU << exticr_bit_shift);
+	SYSCFG->EXTICR[exticr_reg_slot] |= (port_index << exticr_bit_shift);
+
+	// 4. Configure EXTI Line 13 edge triggers
+	EXTI->IMR |= (1U << pin);     // Unmask EXTI13 (Enable the line)
+	switch(edge){
+		case RISING_EDGE:
+			EXTI->RTSR |= (1U << pin);     // Trigger on Rising Edge
+			EXTI->FTSR &= ~(1U << pin);    // Disable Rising Edge trigger
+			break;
+		case FALLING_EDGE:
+			EXTI->FTSR |= (1U << pin);    // Trigger on Falling Edge
+			EXTI->RTSR &= ~(1U << pin);   // Disable Rising Edge trigger
+			break;
+		case BOTH_EDGES:
+			EXTI->RTSR |= (1U << pin);    // Enable Rising Edge
+			EXTI->FTSR |= (1U << pin);    // Enable Falling Edge
+			break;
+		default:
+			break;
+	}
+
+}
+
+void EXTI15_10_IRQHandler(void) {
+    if ((EXTI->PR & (1U << 13)) != 0) {
+        EXTI->PR = (1U << 13);          // CRITICAL: Clear the flag!
+
+        // YOUR CODE HERE
+    }
 }
