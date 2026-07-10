@@ -72,13 +72,64 @@ void interrupt_init(GPIO_TypeDef *GPIOx, uint8_t pin, Interrupt_Edge edge){
 		default:
 			break;
 	}
+	/*
+	 * 	NVIC_SetPriority(EXTI15_10_IRQn, 2); // Set default mid-level priority
+	 *  NVIC_EnableIRQ(EXTI15_10_IRQn);      // Open the gate!
+	 */
 
+}
+
+void EXTI0_IRQHandler(void) {
+    // Clear flag for Pin 1
+    EXTI->PR = (1U << 0);
+
+    // Your code here...
+    gpio_write(GPIOA, 5, IO_OUT_HIGH);
+}
+
+
+void EXTI1_IRQHandler(void) {
+    // Clear flag for Pin 1
+    EXTI->PR = (1U << 1);
+
+    // Your code here...
+    gpio_write(GPIOA, 5, IO_OUT_HIGH);
+}
+
+void EXTI2_IRQHandler(void) {
+    // Clear flag for Pin 2
+    EXTI->PR = (1U << 2);
+
+    // Your code here...
+    gpio_write(GPIOA, 5, IO_OUT_HIGH);
+}
+
+void EXTI3_IRQHandler(void) {
+    // Clear flag for Pin 3
+    EXTI->PR = (1U << 3);
+
+    // Your code here...
+    gpio_write(GPIOA, 5, IO_OUT_HIGH);
+}
+
+void EXTI4_IRQHandler(void) {
+    // Clear flag for Pin 4
+    EXTI->PR = (1U << 4);
+
+    // Your code here...
+}
+
+void EXTI9_5_IRQHandler(void) {
+	if ((EXTI->PR & (1U << 5)) != 0) {
+	        EXTI->PR = (1U << 5); // Clear flag for Pin 5
+
+	        // Handle Pin 5 event here...
+	    }
 }
 
 void EXTI15_10_IRQHandler(void) {
     if ((EXTI->PR & (1U << 13)) != 0) {
         EXTI->PR = (1U << 13);          // CRITICAL: Clear the flag!
-
-        // YOUR CODE HERE
+        gpio_write(GPIOA, 5, IO_OUT_LOW);
     }
 }

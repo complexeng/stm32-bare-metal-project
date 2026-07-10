@@ -14,12 +14,12 @@ void io_init(void){
 	gpio_init(GPIOA, 5, IO_OUTPUT);
 	gpio_write(GPIOA, 5, IO_OUT_HIGH);
 
-	gpio_init(GPIOA, 9, IO_INPUT);
-	gpio_set_pupd(GPIOA, 9, PUP_DOWN);
-
+	// init blue button
 	gpio_init(GPIOC, 13, IO_INPUT);
 	gpio_set_pupd(GPIOC, 13, PUP_NONE);
-
+	interrupt_init(GPIOC, 13, FALLING_EDGE);
+	NVIC_SetPriority(EXTI15_10_IRQn, 2);
+	NVIC_EnableIRQ(EXTI15_10_IRQn);
 }
 
 void mcu_init(void){
