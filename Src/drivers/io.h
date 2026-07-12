@@ -33,7 +33,7 @@ typedef enum {
 } Interrupt_Edge;
 
 // ------ FUNCTIONS -------- //
-
+// GPIO
 // 1. Initialization and Configuration
 void gpio_init(GPIO_TypeDef *GPIOx, uint8_t pin, IO_Mode mode);
 void gpio_set_pupd(GPIO_TypeDef *GPIOx, uint8_t pin, Pupd_Mode pupd); // controls the internal Pull-Up and Pull-Down resistors
@@ -45,6 +45,11 @@ void gpio_toggle(GPIO_TypeDef *GPIOx, uint8_t pin);
 // 3. Input Reading (For IR Line Sensors, Buttons)
 uint8_t gpio_read(GPIO_TypeDef *GPIOx, uint8_t pin);
 
+
+// INTERRUPTS
 void interrupt_init(GPIO_TypeDef *GPIOx, uint8_t pin, Interrupt_Edge edge);
+
+// USART/UART
+void gpio_uart_init(GPIO_TypeDef *GPIOx, uint8_t pin);
 
 #endif

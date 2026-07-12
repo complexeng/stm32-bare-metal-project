@@ -72,11 +72,11 @@ void interrupt_init(GPIO_TypeDef *GPIOx, uint8_t pin, Interrupt_Edge edge){
 		default:
 			break;
 	}
-	/*
-	 * 	NVIC_SetPriority(EXTI15_10_IRQn, 2); // Set default mid-level priority
-	 *  NVIC_EnableIRQ(EXTI15_10_IRQn);      // Open the gate!
-	 */
+}
 
+void gpio_uart_init(GPIO_TypeDef *GPIOx, uint8_t pin){
+	GPIOx->AFR[0] &= ~((0xFU << (4 * 2)) | (0xFU << (4 * 3))); // Clear 4-bit slots
+	GPIOx->AFR[0] |=  ((7U  << (4 * 2)) | (7U  << (4 * 3))); // Set both slots to 7
 }
 
 void EXTI0_IRQHandler(void) {
